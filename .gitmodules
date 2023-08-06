@@ -1,0 +1,3 @@
+[submodule "external/mimetic"]
+	path = external/mimetic
+	url = https://github.com/VladlenPopolitov/mimetic
