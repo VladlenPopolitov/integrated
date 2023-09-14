@@ -21,3 +21,6 @@ target_link_libraries(${PROJECT_NAME}  mimetic)
 3) Add picohttp
 
 git submodule add https://github.com/VladlenPopolitov/picohttpparser external/xercesc/picohttpparser
+
+4) add curl
+git submodule add https://github.com/curl/curl external/curl
