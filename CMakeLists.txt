@@ -3,15 +3,16 @@ set (CMAKE_CXX_STANDARD 20)
 
 project(Integrated VERSION 1.0.0)
 
-add_executable(${PROJECT_NAME} main.cpp cryptopp_check.cpp cryptopp_check.h)
+
+file(GLOB all_src_files_list CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/src/*.c*")
+file(GLOB all_src_h_files_list CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/src/*.h*")
+add_executable(${PROJECT_NAME} main.cpp ${all_src_files_list}  ${all_src_h_files_list})
 # define tests
 enable_testing()
+message(${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)  
 
-add_subdirectory(external/mimetic)
-target_include_directories(${PROJECT_NAME} PUBLIC external/mimetic)  
-target_include_directories(${PROJECT_NAME} PUBLIC ${mimetic_BINARY_DIR}/include)  
-target_link_libraries(${PROJECT_NAME}  mimetic)
-
+set(HAVE_GETTIMEOFDAY 0)
 add_subdirectory(external/xercesc)
 target_include_directories(${PROJECT_NAME} PUBLIC external/xercesc/src)  
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_BINARY_DIR}/external/xercesc/src)
@@ -19,6 +20,9 @@ target_link_libraries(${PROJECT_NAME}  xerces-c)
 
 add_subdirectory(external/cryptopp)
 target_include_directories(${PROJECT_NAME} PUBLIC external/cryptopp/cryptopp)  
-#target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_BINARY_DIR}/external/xercesc/src)
 target_link_libraries(${PROJECT_NAME}  cryptopp::cryptopp)
 
+add_subdirectory(external/mimetic)
+target_include_directories(${PROJECT_NAME} PUBLIC external/mimetic)  
+target_include_directories(${PROJECT_NAME} PUBLIC ${mimetic_BINARY_DIR}/include)  
+target_link_libraries(${PROJECT_NAME}  mimetic)
